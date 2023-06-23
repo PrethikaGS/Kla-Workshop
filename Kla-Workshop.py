@@ -1,4 +1,6 @@
 from PIL import Image, ImageChops
+import cv2
+import numpy as np
 # Loading images
 
 def addToFile(num,im):
@@ -8,9 +10,9 @@ def addToFile(num,im):
 
     for y in range(600):
         for x in range(800):
-            if px[x,y]!=0:
+            if px[x,y]!=(0,0,0):
                 #print(px[x,y],end=" ")
-                l.append([num,x,(600-y)])
+                l.append([num,x,(599-y)])
     print(len(l))
     # open file in write mode
     with open('level1.csv', 'a') as file:
@@ -38,6 +40,15 @@ def createAnomalyImg(p1,p2,p3,num):
     res1=res1.convert("1")
     res2=res2.convert("1")
     im3 = ImageChops.logical_and(res1, res2) 
+
+    re1= np.array(Image.open("D:/PSG/kla/Level_1_Input_Data/"+p1+p2+".jpg"))
+    re2= np.array(Image.open("D:/PSG/kla/Level_1_Input_Data/"+p1+p3+".jpg"))
+
+    bitAnd=cv2.bitwise_and(re1, re2, mask = None)
+    cv2.imwrite("an"+str(num)+".jpg", bitAnd)
+    #cv2.imshow("AND", bitAnd)
+    #cv2.waitKey(0)
+
     """resDiff1 = ImageChops.difference(res1, res2) #e1+e2+e3
     resDiff1.save("combined"+p1+p2+p3+"Error.jpg")
     res3= Image.open("D:/PSG/kla/Level_1_Input_Data/combined"+p1+p2+p3+"Error.jpg")
@@ -45,7 +56,7 @@ def createAnomalyImg(p1,p2,p3,num):
     finalDiff=ImageChops.difference(res3, res4) #e1
     finalDiff.save("anomaly"+str(num)+".jpg")"""
     im3.save("anomaly"+str(num)+".jpg")
-    im=Image.open("D:/PSG/kla/Level_1_Input_Data/anomaly"+str(num)+".jpg")
+    im=Image.open("D:/PSG/kla/Level_1_Input_Data/an"+str(num)+".jpg")
     addToFile(num,im)
 #Die1
 createAnomalyImg("wafer_image_1.png","wafer_image_3.png","wafer_image_2.png",1)
