@@ -10,7 +10,7 @@ def addToFile(num,im):
         for x in range(800):
             if px[x,y]!=0:
                 #print(px[x,y],end=" ")
-                l.append([num,x,y])
+                l.append([num,x,(600-y)])
     print(len(l))
     # open file in write mode
     with open('level1.csv', 'a') as file:
@@ -48,12 +48,12 @@ def createAnomalyImg(p1,p2,p3,num):
     im=Image.open("D:/PSG/kla/Level_1_Input_Data/anomaly"+str(num)+".jpg")
     addToFile(num,im)
 #Die1
-createAnomalyImg("wafer_image_1.png","wafer_image_3.png","wafer_image_4.png",1)
+createAnomalyImg("wafer_image_1.png","wafer_image_3.png","wafer_image_2.png",1)
 #Die2
-createAnomalyImg("wafer_image_2.png","wafer_image_3.png","wafer_image_4.png",2)
+createAnomalyImg("wafer_image_2.png","wafer_image_1.png","wafer_image_3.png",2)
 #Die3
-createAnomalyImg("wafer_image_3.png","wafer_image_4.png","wafer_image_5.png",3)
+createAnomalyImg("wafer_image_3.png","wafer_image_4.png","wafer_image_2.png",3)
 #Die4
-createAnomalyImg("wafer_image_4.png","wafer_image_5.png","wafer_image_1.png",4)
+createAnomalyImg("wafer_image_4.png","wafer_image_5.png","wafer_image_3.png",4)
 #Die5
-createAnomalyImg("wafer_image_5.png","wafer_image_1.png","wafer_image_2.png",5)
+createAnomalyImg("wafer_image_5.png","wafer_image_1.png","wafer_image_4.png",5)
